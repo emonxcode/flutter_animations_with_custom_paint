@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -9,9 +11,25 @@ class CustomPaintFlutter extends StatefulWidget {
 }
 
 class _CustomPaintFlutterState extends State<CustomPaintFlutter> {
+  int index = 0;
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (index < 19) {
+          index++;
+        } else {
+          index = 0;
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -33,8 +51,8 @@ class _CustomPaintFlutterState extends State<CustomPaintFlutter> {
                 Container(
                   color: Colors.green,
                   child: CustomPaint(
-                    size: const Size(100, 100),
-                    painter: Line(),
+                    size: const Size(200, 200),
+                    painter: Line(index: index),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -98,6 +116,8 @@ class Rectangle extends CustomPainter {
 
 /// draw Line
 class Line extends CustomPainter {
+  Line({required this.index});
+  int index = 0;
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint();
@@ -105,10 +125,32 @@ class Line extends CustomPainter {
     paint.strokeWidth = 5;
     paint.strokeCap = StrokeCap.round;
 
-    Offset startingOffset = Offset(0, size.height * 0.5);
-    Offset endingOffset = Offset(size.width, size.height * 0.5);
+    final List<Offset> endingOffset = [
+      Offset(size.width, 0),
+      Offset(size.width, size.height * 0.2),
+      Offset(size.width, size.height * 0.4),
+      Offset(size.width, size.height * 0.6),
+      Offset(size.width, size.height * 0.8),
+      Offset(size.width, size.height),
+      Offset(size.width * 0.8, size.height),
+      Offset(size.width * 0.6, size.height),
+      Offset(size.width * 0.4, size.height),
+      Offset(size.width * 0.2, size.height),
+      Offset(0, size.height),
+      Offset(0, size.height * 0.8),
+      Offset(0, size.height * 0.6),
+      Offset(0, size.height * 0.4),
+      Offset(0, size.height * 0.2),
+      Offset(0, 0),
+      Offset(size.width * 0.2, 0),
+      Offset(size.width * 0.4, 0),
+      Offset(size.width * 0.6, 0),
+      Offset(size.width * 0.8, 0),
+    ];
 
-    canvas.drawLine(startingOffset, endingOffset, paint);
+    Offset startingOffset = Offset(size.width * 0.5, size.height * 0.5);
+
+    canvas.drawLine(startingOffset, endingOffset[index], paint);
   }
 
   @override
