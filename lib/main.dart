@@ -1,12 +1,13 @@
 import 'dart:math' show pi;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animations_custom_painter/custom_paint.dart';
 
 import 'curves_clippers.dart';
 import 'tween_tranform.dart';
 
 void main() {
-  runApp(const MyApp()); 
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: const CurvesClippers(),
+      home: const CustomPaintFlutter(),
     );
   }
 }
