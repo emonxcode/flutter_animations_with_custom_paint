@@ -1,8 +1,7 @@
 import 'dart:math' show pi;
-
 import 'package:flutter/material.dart';
+import 'package:flutter_animations_custom_painter/3d_animations.dart';
 import 'package:flutter_animations_custom_painter/custom_paint.dart';
-
 import 'curves_clippers.dart';
 import 'tween_tranform.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: const CustomPaintFlutter(),
+      home: const Flutter3DAnimations(),
     );
   }
 }
