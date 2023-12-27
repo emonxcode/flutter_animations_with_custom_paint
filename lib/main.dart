@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: const Flutter3DAnimations(),
+      home: const CustomPaintFlutter(),
     );
   }
 }

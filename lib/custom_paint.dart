@@ -76,6 +76,31 @@ class _CustomPaintFlutterState extends State<CustomPaintFlutter> {
                   size: Size(size.width * 0.5, size.height * 0.5),
                   painter: DrawPath(),
                 ),
+                const SizedBox(height: 10),
+                const SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                          child: CardWidget()),
+                      Positioned(
+                        bottom: 8,
+                        right: 8,
+                        child: SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              child: Icon(Icons.arrow_forward),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
@@ -141,7 +166,7 @@ class Line extends CustomPainter {
       Offset(0, size.height * 0.6),
       Offset(0, size.height * 0.4),
       Offset(0, size.height * 0.2),
-      Offset(0, 0),
+      const Offset(0, 0),
       Offset(size.width * 0.2, 0),
       Offset(size.width * 0.4, 0),
       Offset(size.width * 0.6, 0),
@@ -271,4 +296,62 @@ class DrawPath extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class CardWidget extends StatelessWidget {
+  const CardWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: CustomPaint(
+        painter: CardPainter(),
+        child: Expanded(
+            child: Container(
+          decoration: const BoxDecoration(),
+        )),
+      ),
+    );
+  }
+}
+
+class CardPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint();
+    paint.style = PaintingStyle.fill;
+    paint.color = const Color.fromARGB(255, 255, 255, 255);
+    paint.shader = const LinearGradient(
+      colors: [Colors.blue, Colors.green], // Adjust gradient colors as needed
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ).createShader(
+        Rect.fromPoints(const Offset(0, 0), Offset(size.width, size.height)));
+
+    Path path = Path();
+    path.moveTo(size.width * 0.8, size.height);
+    path.quadraticBezierTo(size.width * 0.85, size.height * 0.98,
+        size.width * 0.85, size.height * 0.9);
+
+    path.quadraticBezierTo(size.width * 0.85, size.height * 0.7,
+        size.width * 0.95, size.height * 0.7);
+
+    path.quadraticBezierTo(
+        size.width, size.height * 0.7, size.width, size.height * 0.6);
+
+    path.lineTo(size.width, size.height * 0.2);
+    path.quadraticBezierTo(size.width, 0, size.width * 0.9, 0);
+    path.lineTo(size.width * 0.1, 0);
+    path.quadraticBezierTo(0, 0, 0, size.height * 0.2);
+    path.lineTo(0, size.height * 0.8);
+    path.quadraticBezierTo(0, size.height, size.width * 0.1, size.height);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
 }
